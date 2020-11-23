@@ -13,21 +13,20 @@ public class DbUtil {
             return connection;
         else {
             try {
-                //Properties prop = new Properties();
-                
-                String user = "root";
-                String password = "pr3t3nd3r";
+                String user = "admin";
+                String password = "#L30n4rd0";
                 // Para quem for usar MySql
-                Class.forName("com.mysql.jdbc.Driver"); 
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbagenda", user, password);// Para quem for usar MySql
+                Class.forName("com.mysql.cj.jdbc.Driver"); 
+                connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/dbagenda?useTimezone=true&serverTimezone=UTC", user, password);
                 // Para quem for usar Postgresql
                 //Class.forName("org.postgresql.Driver");
-                //connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dbagenda",user, password);// Para quem for usar Postgres
+                //connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dbagenda",user, password);
+                System.out.print("conectado");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
-                e.printStackTrace();
-            }
+				e.printStackTrace();
+			} 
             return connection;
         }
 

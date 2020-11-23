@@ -2,6 +2,7 @@ package controller;
 
 
 import dao.UserDao;
+import model.User;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
+
 
 
 @WebServlet(name = "Usuarios", urlPatterns = {"/UserController"})
@@ -32,17 +33,20 @@ public class UserController extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             dao.deleteUser(id);
             forward = LIST_USER;
-            request.setAttribute("usuarios", dao.getAllUsers());    
+            request.setAttribute("usuarios", dao.getLista());    
         } else if (action.equalsIgnoreCase("edit")){
             forward = INSERT_OR_EDIT;
             int id = Integer.parseInt(request.getParameter("id"));
             User user = dao.getUserById(id);
             request.setAttribute("user", user);
+        } else if (action.equalsIgnoreCase("insert")){
+            forward = INSERT_OR_EDIT;
         } else if (action.equalsIgnoreCase("listUser")){
             forward = LIST_USER;
-            request.setAttribute("usuarios", dao.getAllUsers());
+            request.setAttribute("usuarios", dao.getLista());
         } else {
-            forward = INSERT_OR_EDIT;
+        	forward = LIST_USER;
+            request.setAttribute("usuarios", dao.getLista());
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
@@ -54,6 +58,7 @@ public class UserController extends HttpServlet {
         user.setNome(request.getParameter("nome"));
         user.setEmail(request.getParameter("email"));
         user.setSenha(request.getParameter("senha"));
+        user.setDdd(request.getParameter("ddd"));
         user.setFone(request.getParameter("fone"));
         user.setTipo(request.getParameter("tipo"));
         String id = request.getParameter("id");
@@ -67,7 +72,7 @@ public class UserController extends HttpServlet {
             dao.updateUser(user);
         }
         RequestDispatcher view = request.getRequestDispatcher(LIST_USER);
-        request.setAttribute("usuarios", dao.getAllUsers());
+        request.setAttribute("usuarios", dao.getLista());
         view.forward(request, response);
     }
 }

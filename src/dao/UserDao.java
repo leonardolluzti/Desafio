@@ -1,6 +1,7 @@
 package dao;
 
-import java.sql.Connection;
+import util.DbUtil;
+import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.User;
-import util.DbUtil;
+
 
 public class UserDao {
 
@@ -21,12 +22,12 @@ public class UserDao {
     public void addUser(User user) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into usuarios(nome, email, senha, ddd, fone, tipo) values (?, ?, ?, ?, ?, ?)");
+            		.prepareStatement("insert into usuarios(nome, email, senha, ddd, fone, tipo) values (?, ?, ?, ?, ?, ?);");
             // Parameters start with 1
             preparedStatement.setString(1, user.getNome());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getSenha());
-            preparedStatement.setInt(4, user.getDdd());
+            preparedStatement.setString(4, user.getDdd());
             preparedStatement.setString(5, user.getFone());
             preparedStatement.setString(6, user.getTipo());
             preparedStatement.executeUpdate();
@@ -58,7 +59,7 @@ public class UserDao {
             preparedStatement.setString(1, user.getNome());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setString(3, user.getSenha());
-            preparedStatement.setInt(4, user.getDdd());
+            preparedStatement.setString(4, user.getDdd());
             preparedStatement.setString(5, user.getFone());
             preparedStatement.setString(6, user.getTipo());
             preparedStatement.setInt(7, user.getId());
@@ -69,32 +70,10 @@ public class UserDao {
         }
     }
 
-    public List<User> getAllUsers() {
-        List<User> listaDeUsuario = new ArrayList<User>();
-        try {
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from usuarios");
-            while (rs.next()) {
-                User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setNome(rs.getString("nome"));
-                user.setSenha(rs.getString("senha"));
-                user.setEmail(rs.getString("email"));
-                user.setDdd(rs.getInt("ddd"));
-                user.setFone(rs.getString("fone"));
-                user.setTipo(rs.getString("tipo"));
-                listaDeUsuario.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return listaDeUsuario;
-    }
-    
     public List<User> getLista() {
-    	try {
+    	
     		List<User> usuarios = new ArrayList<User>();
+    		try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from usuarios");
             while (rs.next()) {
@@ -103,10 +82,10 @@ public class UserDao {
                 user.setNome(rs.getString("nome"));
                 user.setSenha(rs.getString("senha"));
                 user.setEmail(rs.getString("email"));
-                user.setDdd(rs.getInt("ddd"));
+                user.setDdd(rs.getString("ddd"));
                 user.setFone(rs.getString("fone"));
                 user.setTipo(rs.getString("tipo"));
-                //adicionando o objeto à lista
+                //adicionando o objeto a lista
                 usuarios.add(user);
             }
             rs.close();
@@ -130,7 +109,7 @@ public class UserDao {
                 user.setNome(rs.getString("nome"));
                 user.setSenha(rs.getString("senha"));
                 user.setEmail(rs.getString("email"));
-                user.setDdd(rs.getInt("ddd"));
+                user.setDdd(rs.getString("ddd"));
                 user.setFone(rs.getString("fone"));
                 user.setTipo(rs.getString("tipo"));
             }

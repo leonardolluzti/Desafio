@@ -8,7 +8,7 @@ public class User {
     private String nome;
     private String email;
     private String senha;
-    private int ddd;
+    private String ddd;
     private String fone;
     private String tipo;
     
@@ -53,12 +53,12 @@ public class User {
 	}
 
 
-	public int getDdd() {
+	public String getDdd() {
 		return ddd;
 	}
 
 
-	public void setDdd(int ddd) {
+	public void setDdd(String ddd) {
 		this.ddd = ddd;
 	}
 
@@ -86,4 +86,6 @@ public class User {
     public String toString() {
         return "User [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", ddd=" + ddd + ", fone=" + fone + ", tipo=" + tipo + "]";
     }
+
+
 }
